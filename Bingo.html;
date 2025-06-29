@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mobile Bingo Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 10px;
+      background-color: #fefefe;
+    }
+    table {
+      margin: auto;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 320px;
+    }
+    td {
+      width: 20%;
+      height: 60px;
+      border: 1px solid #333;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      background-color: #f9f9f9;
+      transition: background-color 0.3s;
+    }
+    td.marked {
+      background-color: #4CAF50;
+      color: white;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h2>Bingo Game (1 - 25)</h2>
+  <table id="bingoBoard"></table>
+  <button onclick="generateBoard()">New Game</button>  <script>
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function generateBoard() {
+      const board = document.getElementById("bingoBoard");
+      board.innerHTML = "";
+      let numbers = Array.from({ length: 25 }, (_, i) => i + 1);
+      shuffle(numbers);
+
+      for (let i = 0; i < 5; i++) {
+        let row = document.createElement("tr");
+        for (let j = 0; j < 5; j++) {
+          let cell = document.createElement("td");
+          cell.textContent = numbers[i * 5 + j];
+          cell.onclick = () => cell.classList.toggle("marked");
+          row.appendChild(cell);
+        }
+        board.appendChild(row);
+      }
+    }
+
+    generateBoard();
+  </script></body>
+</html>
